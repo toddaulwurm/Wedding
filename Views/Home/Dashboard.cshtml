@@ -1,0 +1,50 @@
+@using System.Text.RegularExpressions
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container">
+    <a href="/logout" class="btn btn-dark">Logout</a>
+    <h1>Hello, @ViewBag.User.FirstName</h1>
+    <h1>Welcome to the Wedding Planner!</h1>
+    <a href="/newwedding">New Wedding</a>
+    <table>
+        <thead>
+            <th>Wedding</th>
+            <th>Date</th>
+            <th>Guests</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            @{
+                foreach(WeddingModel wedding in ViewBag.AllWeddings)
+                {
+                <tr>
+                    <td><a href="/ReadWedding/@wedding.WeddingId">@wedding.NameOne & @wedding.NameTwo</a></td>
+                    <td>@wedding.Date</td>
+                    <td>@wedding.RSVPs.Count</td>
+                    @{
+                        if(@wedding.UserId == ViewBag.User.UserId)
+                        {
+                            <td><a class="btn btn-warning" href="/DeleteWedding/@wedding.WeddingId">Delete</a></td>
+                        }
+                        else
+                        {
+                            if(@wedding.RSVPs.Any(rsvp => rsvp.UserId == ViewBag.User.UserId))
+                            {
+                                <td><a href="rsvp/@wedding.WeddingId" class="btn btn-warning">UN-RSVP</a></td>
+                            }
+                            else
+                            {
+                                <td><a href="rsvp/@wedding.WeddingId" class="btn btn-success">RSVP</a></td>
+                            }
+                        }
+                    }
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+

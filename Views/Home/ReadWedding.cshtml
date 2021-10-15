@@ -1,0 +1,23 @@
+@using System.Text.RegularExpressions
+@{
+    ViewData["Title"] = "Dashboard";
+}
+@model WeddingModel
+
+<div class="container">
+    <a href="/logout" class="btn btn-dark">Logout</a>
+    <a href="/Dashboard" class="btn btn-success">Home</a>
+    <h1>Hey, @ViewBag.User.FirstName! <br>Here Are the details for @ViewBag.OneModel.NameOne & @ViewBag.OneModel.NameTwo's Wedding.</h1>
+    <h2>Date: @ViewBag.OneModel.Date</h2>
+    <h2>Address: @ViewBag.OneModel.Address</h2>
+    <h3>Guest List:</h3>
+    <ul>
+        @{
+            foreach(RSVP rsvp in ViewBag.GuestList)
+            {
+                <li>@rsvp.User.FirstName @rsvp.User.LastName</li>
+            }
+        }
+    </ul>
+
+</div>
